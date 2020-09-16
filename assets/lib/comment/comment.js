@@ -33,17 +33,9 @@ $(function() {
                     // console.log(res.data.total_count);
 
                 page(res.data.total_count)
-
-
-
-
             }
         })
     }
-
-
-
-
 
     // 分页
     function page(num) {
@@ -66,79 +58,108 @@ $(function() {
                 //首次不执行
                 if (!first) {
                     initTable()
-
                 }
-
             }
         })
     }
-    // 点击修改弹出弹出框
-    $('body').on('click', '.btnChange', function() {
-        index1 = layer.open({
-            title: '查看评论',
-            type: 1,
-            area: ['500px', '250px'],
-            content: $('#tpl-edit').html()
-        })
-        var id = $(this).attr('data-id')
-        console.log(id);
-        $.ajax({
-            url: 'http://ttapi.research.itcast.cn/mp/v1_0/comments',
-            type: 'GET',
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
-            },
-            data: {
-                source: id,
-                type: 'a'
-            },
-            success: function(res) {
-                console.log(res);
-            }
-
-        })
-    })
-
-
-
-
 
     // 点击关闭弹出框
     $('body').on('click', '.btnDel', function() {
-        // var num = $('.btnDel').length
-        // console.log(num);
-        var id = $(this).attr('data-id')
-        console.log(id);
+        var that = $(this)
+        var thats = $(this).siblings('.btnDel')
+            // var num = $('.btnDel').length
+            // console.log(num);
+            // var id = $(this).attr('data-id')
+        console.log($(this));
+
+        var a = that.attr('id')
+        var b = thats.attr('id')
+        console.log(a);
+        console.log(b);
         layer.confirm('确定更改评论状态?', function(index) {
             //do something
-            // 利用id调用接口改变评论状态
-            $.ajax({
-                url: 'http://ttapi.research.itcast.cn/mp/v1_0/comments/status',
-                method: 'PUT',
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
-                },
+            if (a === 'close') {
+                that.hide()
+                thats.show()
+                return layer.msg('评论已打开')
 
-                data: {
-                    allow_comment: true,
-                    article_id: id + ''
-                },
-                success: function(res) {
-                    console.log(res);
-                    // if (num === 1) {
-                    //     q.pagenum = q.pagenum - 1
-                    // }
-                    // initTable()
-                }
-            })
+            } else {
+                that.hide()
+                thats.show()
+                return layer.msg('评论已关闭')
+            }
+
             layer.close(index)
-
         })
-
-
-
-
     })
+
+
+
+
+
+
+
+
+
+
+    // 点击修改弹出弹出框
+    // $('body').on('click', '.btnChange', function() {
+    //     index1 = layer.open({
+    //         title: '查看评论',
+    //         type: 1,
+    //         area: ['500px', '250px'],
+    //         content: $('#tpl-edit').html()
+    //     })
+
+    // var id = $(this).attr('data-id')
+    // console.log(id);
+    // $.ajax({
+    //     url: 'http://ttapi.research.itcast.cn/mp/v1_0/comments',
+    //     type: 'GET',
+    //     headers: {
+    //         Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
+    //     },
+    //     data: {
+    //         source: id,
+    //         type: 'a'
+    //     },
+    //     success: function(res) {
+    //         console.log(res);
+    //     }
+
+    // })
+    // })
+
+    // // 点击关闭弹出框
+    // $('body').on('click', '.btnDel', function() {
+    //     // var num = $('.btnDel').length
+    //     // console.log(num);
+    //     var id = $(this).attr('data-id')
+    //     console.log(id);
+    //     layer.confirm('确定更改评论状态?', function(index) {
+    //         //do something
+    //         // 利用id调用接口改变评论状态
+    //         $.ajax({
+    //             url: 'http://ttapi.research.itcast.cn/mp/v1_0/comments/status',
+    //             method: 'PUT',
+    //             headers: {
+    //                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
+    //             },
+    //             data: {
+    //                 allow_comment: true,
+    //                 article_id: id + ''
+    //             },
+    //             success: function(res) {
+    //                 console.log(res);
+    //                 // if (num === 1) {
+    //                 //     q.pagenum = q.pagenum - 1
+    //                 // }
+    //                 // initTable()
+    //             }
+    //         })
+    //         layer.close(index)
+    //     })
+    // })
 
 
 
