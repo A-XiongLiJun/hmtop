@@ -19,24 +19,24 @@
         </div>
         <div class="layui-card-body">
             <!-- form表单 -->
-            <form class="layui-form" action="">
+            <form class="layui-form" id="fr-sub">
                 <!-- 第一行 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="sex" value="全部" title="全部" checked>
-                        <input type="radio" name="sex" value="草稿" title="草稿">
-                        <input type="radio" name="sex" value="待审核" title="待审核">
-                        <input type="radio" name="sex" value="审核通过" title="审核通过">
-                        <input type="radio" name="sex" value="审核失败" title="审核失败">
-                        <input type="radio" name="sex" value="已删除" title="已删除">
+                        <input type="radio" name="sex" value="" title="全部" checked lay-filter="go">
+                        <input type="radio" name="sex" value="0" title="草稿" lay-filter="go">
+                        <input type="radio" name="sex" value="1" title="待审核" lay-filter="go">
+                        <input type="radio" name="sex" value="2" title="审核通过" lay-filter="go">
+                        <input type="radio" name="sex" value="3" title="审核失败" lay-filter="go">
+                        <input type="radio" name="sex" value="4" title="已删除" lay-filter="go">
                     </div>
                 </div>
                 <!-- 第二行 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">频道：</label>
                     <div class="layui-input-block">
-                        <select name="city" lay-verify="required" id="select-list">
+                        <select name="city" id="select-list" lay-filter="test">
                         
                       </select>
                     </div>
@@ -50,7 +50,7 @@
                 <!-- 第四行 -->
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit lay-filter="formDemo">删选</button>
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">筛选</button>
                     </div>
                 </div>
             </form>
@@ -81,6 +81,7 @@
 
                 </tbody>
             </table>
+            <div id="Next"></div>
         </div>
     </div>
 
@@ -97,21 +98,22 @@
         {{each results}}
         <tr>
             <td>
-                <img src="/assets/images/img/error.gif" alt="">
+                <!-- <img src="/assets/images/img/error.gif" alt=""> -->
+                <img src="{{$value.cover.images|dataImg}}" alt="">
             </td>
             <td>{{$value.title}}</td>
-            <td>{{$value.status}}</td>
+            <td><span class="cell">{{$value.status|Success}}</span></td>
             <td>{{$value.pubdate}}</td>
             <td>
-                <i class="layui-icon layui-icon-edit" style="font-size: 30px;"></i>
-                <i class="layui-icon layui-icon-delete" style="font-size: 30px;"></i>
+                <i id="cell" class="layui-icon layui-icon-edit" style="font-size: 30px;"></i>
+                <i id="delete" class="layui-icon layui-icon-delete" data-id="{{$value.id}}" style="font-size: 30px;"></i>
             </td>
         </tr>
         {{/each}}
     </script>
 
     <script src="/assets/lib/laydate/laydate.js"></script>
-    <script>
+    <!-- <script>
         laydate.render({
             elem: '#test1',
             type: 'datetime', //不选择时间
@@ -119,7 +121,7 @@
             // format: 'yyyy年M月d日H时m分s秒'
             format: 'yyyy年M月d日'
         });
-    </script>
+    </script> -->
     <script src="/assets/lib/layui/layui.all.js"></script>
     <script src="/assets/lib/jquery/jquery.js"></script>
     <script src="/assets/lib/template-web.js"></script>

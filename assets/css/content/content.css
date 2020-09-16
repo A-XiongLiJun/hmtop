@@ -69,3 +69,20 @@ tbody td .layui-icon:nth-child(2):hover {
     color: #fff;
     background-color: #f56c6c;
 }
+
+.cell {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #67c23a;
+    display: inline-block;
+    height: 32px;
+    padding: 0 20px;
+    margin-left: 55px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
