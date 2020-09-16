@@ -60,14 +60,15 @@
         {{each results}}
         <tr>
             <td>{{$value.title}}</td>
-            <td>0</td>
-            <td>0</td>
-            <td>正常</td>
+            <td>{{$value.comment_count}}</td>
+            <td>{{$value.fans_comment_count}}</td>
+            <td>{{$value.comment_status}}</td>
             <td>
-                <button type="button" class="layui-btn layui-btn-sm btnChange" data-id="{{$value.id}}">查看评论</button>
-                <button type="button" class="layui-btn layui-btn-danger layui-btn-sm btnDel" data-id="{{$value.id}}" id="close">关闭评论</button>
-                <button type="button" class="layui-btn layui-btn-sm btnDel" data-id="{{$value.id}}" id="open">打开评论</button>
-            </td>
+                <button type="button" class="layui-btn layui-btn-sm btnChange" data-id="{{$value.id}}">查看评论</button> {{if $value.comment_status === '正常'}}
+
+                <button type="button" data-id="{{$value.id}}" class="layui-btn layui-btn-sm layui-btn-danger" id="close">关闭评论</button> {{else if $value.comment_status === '关闭' }}
+
+                <button type="button" data-id="{{$value.id}}" class="layui-btn layui-btn-sm" id="open">打开评论</button> {{/if}}
         </tr>
         {{/each}}
     </script>
@@ -80,13 +81,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block">
-                    <input type="text" name="name" required lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+                    <input type="text" name="art_title" required lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input fenlei">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">评论时间</label>
                 <div class="layui-input-block">
-                    <input type="text" name="alias" required lay-verify="required" placeholder="请输入分类别名" autocomplete="off" class="layui-input">
+                    <input type="text" name="art_pubdate" required lay-verify="required" placeholder="请输入分类别名" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </form>
