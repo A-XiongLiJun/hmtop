@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容管理</title>
+    <link rel="stylesheet" href="/assets/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/assets/css/content/content.css">
+</head>
+
+<body>
+    <!-- 筛选面板 -->
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <a href="/home/dashboard.html">首页</a>
+            <span>></span>
+            <i>评论管理</i>
+        </div>
+        <div class="layui-card-body">
+            <!-- form表单 -->
+            <form class="layui-form" id="fr-sub">
+                <!-- 第一行 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="" title="全部" checked lay-filter="go">
+                        <input type="radio" name="sex" value="0" title="草稿" lay-filter="go">
+                        <input type="radio" name="sex" value="1" title="待审核" lay-filter="go">
+                        <input type="radio" name="sex" value="2" title="审核通过" lay-filter="go">
+                        <input type="radio" name="sex" value="3" title="审核失败" lay-filter="go">
+                        <input type="radio" name="sex" value="4" title="已删除" lay-filter="go">
+                    </div>
+                </div>
+                <!-- 第二行 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">频道：</label>
+                    <div class="layui-input-block">
+                        <select name="city" id="select-list" lay-filter="test">
+                        
+                      </select>
+                    </div>
+                </div>
+                <!-- 第三行 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">日期：</label>
+                    <!-- <input type="text" class="rq" id="test1" placeholder="开始日期 - 结束日期"> -->
+                    <input type="text" id="test1" class="rq" placeholder="开始日期 - 结束日期">
+                </div>
+                <!-- 第四行 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">筛选</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 筛选列表 -->
+    <div class="layui-card">
+        <div class="layui-card-header">根据筛选条件共查询到 <span id="tab-sum">0</span> 条结果：</div>
+        <div class="layui-card-body">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="220">
+                    <col width="220">
+                    <col width="220">
+                    <col width="236">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>封面</th>
+                        <th>标题</th>
+                        <th>状态</th>
+                        <th>发布时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <div id="Next"></div>
+        </div>
+    </div>
+
+    <!-- 文章频道模板 -->
+    <script type="text/html" id="tm-list">
+        <option value=""></option>
+        {{each channels}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
+
+    <!-- 筛选列表模板引擎 -->
+    <script type="text/html" id="tm-tab">
+        {{each results}}
+        <tr>
+            <td>
+                <!-- <img src="/assets/images/img/error.gif" alt=""> -->
+                <img src="{{$value.cover.images|dataImg}}" alt="">
+            </td>
+            <td>{{$value.title}}</td>
+            <td><span class="cell">{{$value.status|Success}}</span></td>
+            <td>{{$value.pubdate}}</td>
+            <td>
+                <i id="cell" class="layui-icon layui-icon-edit" style="font-size: 30px;"></i>
+                <i id="delete" class="layui-icon layui-icon-delete" data-id="{{$value.id}}" style="font-size: 30px;"></i>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+
+    <script src="/assets/lib/laydate/laydate.js"></script>
+    <!-- <script>
+        laydate.render({
+            elem: '#test1',
+            type: 'datetime', //不选择时间
+            range: '-',
+            // format: 'yyyy年M月d日H时m分s秒'
+            format: 'yyyy年M月d日'
+        });
+    </script> -->
+    <script src="/assets/lib/layui/layui.all.js"></script>
+    <script src="/assets/lib/jquery/jquery.js"></script>
+    <script src="/assets/lib/template-web.js"></script>
+    <script src="/assets/lib/content/content.js"></script>
+</body>
+
+</html>
