@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素材管理</title>
+    <!-- 引入自己的样式 -->
+    <link rel="stylesheet" href="/assets/lib/layui/css/layui.css">
+    <!-- 引入layui的样式 -->
+    <link rel="stylesheet" href="/assets/css/feature/Material/feature/Material.css">
+
+</head>
+
+<body>
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <a href="../home-page/home-page.html">首页</a>
+            <span>></span>
+            <i>素材管理</i></div>
+        <div class="layui-card-body">
+            <div class="layui-btn-group">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-normal">全部</button>
+                <button type="button" class="layui-btn layui-btn-primary">收藏</button>
+            </div>
+            <div class="layui-upload">
+                <input type="file" id="file" accept="image/png,image/jpeg">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <!-- <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1">
+                    <p id="demoText"></p>
+                </div> -->
+            </div>
+            <div class="layui-row layui-col-space1">
+            </div>
+            <!-- 分页区域 -->
+            <div id="pageBox"></div>
+        </div>
+        <script type="text/html" id="Material">
+            {{each results}}
+            <div class="layui-col-md3">
+                <div class="grid-demo grid-demo-bg1">
+                    <img src="{{$value.url}}" id='{{$value.id}}'>
+                    <div class="option">
+                        <i class="layui-icon layui-icon-rate"></i>
+                        <i class="layui-icon layui-icon-delete"></i>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 引入layui的js -->
+        <script src="/assets/lib/layui/layui.all.js"></script>
+        <!-- 引入jQuery -->
+        <script src="/assets/lib/jquery/jquery.min.js"></script>
+        <!-- 引入template的js -->
+        <script src="/assets/lib/template-web.js"></script>
+        <!-- 引入自己的js -->
+        <script src="/assets/lib/feature/Material/feature/Material.js"></script>
+</body>
+
+</html>
