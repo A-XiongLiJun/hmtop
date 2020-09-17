@@ -101,12 +101,17 @@
                 </div>
                 <div class="layui-tab-item  showImg">
                     <div class="cover-left">
-                        <img id="showImage" src="../assets/images/art_pub/选择照片.png" alt="" />
+                        <img id="showImages" src="../assets/images/art_pub/选择照片.png" alt="" />
                         <input type="file" id="file">
-                        <button class="layui-btn layui-btn-primary" lay-submit id="cancleBtn1">取消</button>
-                        <button class="layui-btn " lay-submit id="sureBtn2">确定</button>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" id="uploadBtn">
+                                <button class="layui-btn layui-btn-primary" lay-submit id="cancleBtn1">取消</button>
+                                <button class="layui-btn " lay-submit id="sureBtn2">确定</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </script>

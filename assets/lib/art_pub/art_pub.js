@@ -8,9 +8,7 @@ $(function() {
         // 定义加载文章频道的方法
     function initCate() {
         $.ajax({
-            // if (res.message !== 'OK') {
-            //     return layer.msg("获取频道失败");
-            // }
+
             type: 'get',
             url: 'http://ttapi.research.itcast.cn/mp/v1_0/channels',
             success: function(res) {
@@ -75,7 +73,7 @@ $(function() {
         })
     }
     // 点击上传图片
-    $('body').on('click', '#showImage', function() {
+    $('body').on('click', '#showImages', function() {
         // 模拟人的点击行为
         $('#file').click()
 
@@ -145,10 +143,9 @@ $(function() {
             }),
             success: function(res) {
                 if (res.messages !== 'OK') {
-                    layer.msg('发布失败')
+                    return layer.msg('发布成功')
                 }
-                layer.msg('发布成功')
-
+                return layer.msg('发布成功')
             }
         })
     })
