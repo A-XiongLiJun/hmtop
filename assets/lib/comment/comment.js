@@ -5,7 +5,8 @@ $(function() {
 
     var q = {
         page: 1,
-        per_page: 10
+        per_page: 10,
+        response_type: "comment"
     }
 
     initTable()
@@ -21,17 +22,22 @@ $(function() {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
             },
+            dataFilter: function (res)  {
+                res = res.replace(/\"id\": (\d+)/g, '"id":"$1"')
+                    // console.log(res);
+                return res
+            },
             success: function(res) {
                 console.log(res);
-
-                res.data.results.forEach(function(item) {
-                    item.id = new BigNumber(item.id)
+                $.each(res.data.results, function(i, n) {
+                    if (n.comment_status == true) {
+                        n.comment_status = "正常"
+                    } else {
+                        n.comment_status = "关闭"
+                    }
                 })
-
                 var htmlStr = template('tpl-table', res.data)
                 $('tbody').append(htmlStr)
-                    // console.log(res.data.total_count);
-
                 page(res.data.total_count)
             }
         })
@@ -54,8 +60,8 @@ $(function() {
 
                 // console.log(obj.limit); //得到每页显示的条数
                 q.per_page = obj.limit
-                console.log(q);
-                //首次不执行
+                    // console.log(q);
+                    //首次不执行
                 if (!first) {
                     initTable()
                 }
@@ -64,32 +70,95 @@ $(function() {
     }
 
     // 点击关闭弹出框
-    $('body').on('click', '.btnDel', function() {
-        var that = $(this)
-        var thats = $(this).siblings('.btnDel')
-            // var num = $('.btnDel').length
-            // console.log(num);
-            // var id = $(this).attr('data-id')
-        console.log($(this));
+    $('body').on('click', '#close', function() {
+        // var num = $('.btnDel').length
+        // console.log(num);
+        var id = $(this).attr('data-id')
 
-        var a = that.attr('id')
-        var b = thats.attr('id')
-        console.log(a);
-        console.log(b);
         layer.confirm('确定更改评论状态?', function(index) {
             //do something
-            if (a === 'close') {
-                that.hide()
-                thats.show()
-                return layer.msg('评论已打开')
+            // 利用id调用接口改变评论状态
+            $.ajax({
+                url: `http://ttapi.research.itcast.cn/mp/v1_0/comments/status?article_id=${id}`,
+                method: 'PUT',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    allow_comment: false
+                }),
+                success: function(res) {
+                    layer.msg('更改评论类型成功', { icon: 1 });
+                    res.data.allow_comment = true,
+                        // $(this).removeClass("layui-btn-danger")
+                        initTable()
+                }
+            })
+            layer.close(index)
+        })
+    })
 
-            } else {
-                that.hide()
-                thats.show()
-                return layer.msg('评论已关闭')
+    $('body').on('click', '#open', function() {
+        // var num = $('.btnDel').length
+        // console.log(num);
+        var id = $(this).attr('data-id')
+
+        layer.confirm('确定更改评论状态?', function(index) {
+            //do something
+            // 利用id调用接口改变评论状态
+            $.ajax({
+                url: `http://ttapi.research.itcast.cn/mp/v1_0/comments/status?article_id=${id}`,
+                method: 'PUT',
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    allow_comment: true
+                }),
+                success: function(res) {
+                    layer.msg('更改评论类型成功', { icon: 1 });
+                    res.data.allow_comment = false,
+                        // $(this).removeClass("layui-btn-danger")
+                        initTable()
+                }
+            })
+            layer.close(index)
+        })
+    })
+
+    // 点击修改弹出弹出框
+    $('body').on('click', '.btnChange', function() {
+        index1 = layer.open({
+            title: '查看评论',
+            type: 1,
+            area: ['500px', '250px'],
+            content: $('#tpl-edit').html()
+        })
+
+        var id = $(this).attr('data-id')
+        console.log(id);
+        $.ajax({
+            url: 'http://ttapi.research.itcast.cn/mp/v1_0/comments',
+            type: 'GET',
+            contentType: 'application/json',
+            // data: JSON.stringify({
+            //     allow_comment: true
+            // }),
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('hmtoken') || ''
+            },
+            data: {
+                source: id,
+                type: 'a'
+            },
+            success: function(res) {
+                console.log(res);
+                form.val('form-layui1', res.data)
+
             }
 
-            layer.close(index)
         })
     })
 
@@ -99,6 +168,45 @@ $(function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+    // 点击关闭弹出框
+    // $('body').on('click', '.btnDel', function() {
+    //     var that = $(this)
+    //     var thats = $(this).siblings('.btnDel')
+    //         // var num = $('.btnDel').length
+    //         // console.log(num);
+    //         // var id = $(this).attr('data-id')
+    //     console.log($(this));
+
+    //     var a = that.attr('id')
+    //     var b = thats.attr('id')
+    //     console.log(a);
+    //     console.log(b);
+    //     layer.confirm('确定更改评论状态?', function(index) {
+    //         //do something
+    //         if (a === 'close') {
+    //             that.hide()
+    //             thats.show()
+    //             return layer.msg('评论已打开')
+
+    //         } else {
+    //             that.hide()
+    //             thats.show()
+    //             return layer.msg('评论已关闭')
+    //         }
+
+    //         layer.close(index)
+    //     })
+    // })
 
 
 
