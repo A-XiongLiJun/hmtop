@@ -24,14 +24,14 @@ $(function() {
             },
             dataFilter: function (res)  {
               res = res.replace(/\"id\": (\d+)/g,  '"id":"$1"')
-                console.log(res);
+                // console.log(res);
                 return res
             },
             success: function(res) {
                 // if (res.status !== 200) {
                 //     return layer.msg(res.status)
                 // }
-                console.log(res);
+                // console.log(res);
                 $('#tab-sum').html(res.data.total_count) //筛选后的总条数
                 // console.log(res.data);
                 var htmlStr = template('tm-tab', res.data)
@@ -48,7 +48,7 @@ $(function() {
                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
             },
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 var htmlStr = template('tm-list', res.data)
                 $('#select-list').html(htmlStr)
                     // 手动调用layui  重新渲染一下
@@ -120,7 +120,7 @@ $(function() {
             layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
             limits: [10, 20, 30, 40],
             jump: function(obj, first) {
-                console.log(obj.curr);
+                // console.log(obj.curr);
                 query.page = obj.curr
                 if (!first) {
                     query.per_page = obj.limit
