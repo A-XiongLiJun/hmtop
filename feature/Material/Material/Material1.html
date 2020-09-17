@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素材管理</title>
+    <!-- 引入自己的样式 -->
+    <link rel="stylesheet" href="/assets/lib/layui/css/layui.css">
+    <!-- 引入layui的样式 -->
+    <link rel="stylesheet" href="/assets/css/feature/Material/feature/Material.css">
+
+</head>
+
+<body>
+
+    <!-- 引入layui的js -->
+    <div class="layui-card">
+        <div class="layui-card-header">图片管理</div>
+        <div class="layui-card-body">
+            <div class="layui-btn-group">
+
+            </div>
+            <button type="button" class="layui-btn layui-btn-normal" id="upload-pic-btn">上传图片</button>
+            <input type="file" id="file-pic-ipt" accept="image/png, image/jpeg">
+
+            <!-- 图片区域 -->
+            <div class="layui-container" id="material-cont">
+            </div>
+
+            <!-- 分页区域 -->
+            <div id="renderPage"></div>
+        </div>
+    </div>
+
+
+    <!-- 自己创建一个图片模板 -->
+    <script type="text/html" id="material-pic">
+        {{each results}}
+        <div class="layui-col-md2">
+            <div class="layui-col-md2-box">
+                <img class="layui-col-md2-pic" src="{{$value.url}}" alt="">
+                <div class="operate">
+                    <i class="layui-icon layui-icon-rate "></i>
+                    <i class="layui-icon layui-icon-delete"></i>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <!-- 收藏图片模板 -->
+    <script type="text/html" id="collect-pic">
+        {{each results}}
+        <div class="layui-col-md2">
+            <div data-id={{$value.id}} class="layui-col-md2-box">
+                <img class="layui-col-md2-pic" src="{{$value.url}}" alt="">
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script src="/assets/lib/layui/layui.all.js"></script>
+    <!-- 引入jQuery -->
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <!-- 引入template的js -->
+    <script src="/assets/lib/template-web.js"></script>
+    <!-- 引入自己的js -->
+    <script src="/assets/lib/feature/Material/feature/Material.js"></script>
+</body>
+
+</html>

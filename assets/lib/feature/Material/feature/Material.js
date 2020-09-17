@@ -1,39 +1,68 @@
 $(function() {
-    var laypage = layui.laypage;
-    // 定义一个查询的参数对象，将来请求数据的时候，
-    // 需要将请求参数对象提交到服务器
-    var q = {
-        page: 1, // 页码值，默认请求第一页的数据
-        per_page: 8, // 每页显示几条数据，默认每页显示2条
-    }
-    var total = 0;
-    $('.layui-btn-normal ').on('click', function() {
-        $(this).addClass('layui-btn-normal').siblings().removeClass('layui-btn-normal')
-    })
-    $('.layui-btn-primary').on('click', function() {
-        $(this).addClass('layui-btn-normal').siblings().removeClass('layui-btn-normal')
-    })
-    initTable(q.page, q.per_page)
 
-    function initTable(page, pageCount) {
-        var query = '';
-        if (page && pageCount) {
-            query = '?page=' + page + '&&per_page=' + pageCount;
-        }
+    var layer = layui.layer
+    var laypage = layui.laypage;
+    var q = {
+        page: 1, //当前的页码值 默认的的初始页面
+        per_page: 20, //每页显示的条数 设置默认为20
+    }
+
+    initTable()
+
+    function initTable() {
         $.ajax({
-            url: 'http://ttapi.research.itcast.cn/mp/v1_0/user/images' + query,
+            url: 'http://ttapi.research.itcast.cn/mp/v1_0/user/images',
             type: 'GET',
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
             },
+            data: q,
+            success: function(res) {
+                // console.log(res);
+                var htmlStr = template('material-pic', res.data)
+                $('.box3').html(htmlStr)
+                    // if (total == 0) {
+                    //     renderPage(res.data.total_count)
+                    // }
+                renderPage(res.data.total_count)
+
+            }
+        })
+    }
+
+
+
+    // 获取后台数据
+    $('.btn2').on('click', function() {
+        shoucang()
+    })
+
+
+    function shoucang() {
+        // var query = '';
+        // if (page && pageCount) {
+        //     query = '?page=' + page + '&&per_page=' + pageCount;
+        // }
+        q.collect = true
+        $.ajax({
+            url: 'http://ttapi.research.itcast.cn/mp/v1_0/user/images',
+            type: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
+            },
+            data: q,
             success: function(res) {
                 console.log(res);
-                var htmlStr = template('Material', res.data)
-                $('.layui-row').html(htmlStr)
-                if (total == 0) {
-                    renderPage(res.data.total_count)
-                }
+                var htmlStr = template('material-pic', res.data)
+                $('.box4').html(htmlStr)
+                    // if (total == 0) {
+                    //     renderPage(res.data.total_count)
+                    // }
+
+                // renderPage(res)
+                renderPage(res.data.total_count)
             }
+
         })
     }
 
@@ -46,34 +75,146 @@ $(function() {
             count: total, //数据总数，从服务端得到
             limit: q.per_page, // 每页显示的条数
             curr: q.page,
-            layout: ['count', 'prev', 'page', 'next', 'skip'],
+            layout: ['count', 'prev', 'page', 'next', ],
+            limits: [10, 20, 30],
             jump: function(obj, first) {
-                console.log(obj.curr);
-                if (obj.curr != q.page) {
-                    q.page = obj.curr
-                    q.per_page = obj.limit
-                    initTable(q.page, q.per_page)
+                // console.log(obj.curr);
+                // console.log(obj.limit);
+                q.page = obj.curr
+                q.per_page = obj.limit
+                if (!first) {
+                    initTable()
                 }
             }
         });
     }
 
-    $('#test1').on('click', function() {
-        $('#file').click()
+    $('#upload-pic-btn').on('click', function() {
+        $('#file-pic-ipt').click()
+
     })
-    $('#file').on('change', function(e) {
-        var filelist = e.target.files
-        console.log(e);
-        if (filelist.length === 0) {
-            return layer.msg('请选择照片!')
+
+    $('#file-pic-ipt').on('change', function(e) {
+        // console.log(e.target.files[0]);
+        var fileList = e.target.files[0]
+        console.log(fileList);
+        var fileImg = new FormData()
+        fileImg.append('image', fileList)
+
+        if (fileList.length === 0) {
+            return layer.msg('请上传图片')
         }
-        // 1.拿到用户选择的文件
-        var file = e.target.files[0]
-            // 2.将文件，转化为路径
-        var imgURL = URL.createObjectURL(file)
-            // $image
-            //     .cropper('destroy') // 销毁旧的裁剪区域
-            //     .attr('src', imgURL) // 重新设置图片路径
-            //     .cropper(options) // 重新初始化裁剪区域
+        $.ajax({
+            url: 'http://ttapi.research.itcast.cn/mp/v1_0/user/images',
+            method: 'POST',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
+            },
+            contentType: false,
+            processData: false,
+            data: fileImg,
+            success: function(res) {
+                console.log(res);
+
+                initTable() // 获取后台数据 并渲染
+            }
+        })
     })
+    $('.btn1').on('click', function() {
+        initTable()
+    })
+
+    var collect = null
+    $('body').on('click', '.star', function() {
+        var id = $(this).parent().siblings().attr('data-id')
+        var imgId = $(this).attr('is_collected')
+            // console.log(imgId);
+        if (imgId) {
+            collect = false
+        } else {
+            collect = true
+        }
+        $.ajax({
+            url: `http://ttapi.research.itcast.cn/mp/v1_0/user/images/${id}`,
+            method: 'PUT',
+            data: JSON.stringify({
+                collect: collect
+            }),
+                  
+            headers: {
+                "Content-Type": 'application/json',
+
+                "Authorization": 'Bearer ' + localStorage.getItem('hmtoken')
+            },
+            success: function(res) {
+                console.log(res);
+                initTable()
+            }
+        })
+    })
+    $('body').on('click', '.delete', function() {
+        // 图片id
+        var id = $(this).parent().siblings().attr('data-id')
+        $.ajax({
+            url: `http://ttapi.research.itcast.cn/mp/v1_0/user/images/${id}`,
+            method: 'DELETE',
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": 'Bearer ' + localStorage.getItem('hmtoken')
+            },
+            success: function(res) {
+                // layui.layer.msg("添加收藏成功")
+            }
+        })
+    })
+
+    // var flag = true
+    // $('body').on('click', '.layui-icon-rate', function() {
+    //         if (flag) {
+    //             $(this).addClass('red')
+    //             return flag = false
+    //         }
+    //         if (flag === false) {
+    //             $(this).removeClass('red')
+    //             return flag = true
+    //         }
+    //         // console.log(this);
+    //     })
+    // 点击收藏获取到的图片并隐藏全部的图片
+    // $('body').on('click', '.sc', function() {
+    //         // $('#layui-col-md2').hide()
+    //         $.ajax({
+    //             url: `http://ttapi.research.itcast.cn/mp/v1_0/user/images`,
+    //             contentType: 'application/json',
+    //             method: 'PUT',
+    //             data: JSON.stringify({
+    //                 collect: true
+    //             }),
+    //             headers: {
+    //                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
+    //             },
+    //             success: function(res) {
+    //                 console.log(res);
+    //                 var htmlStr = template('Materials_three', res.data)
+    //                 $('.layui-row').html(htmlStr)
+    //                 renderPage(res.data.total_count)
+    //             }
+    //         })
+    //     })
+    //     /**
+    //      * 点击删除图标 绑定事件
+    //      */
+    // $('body').on('click', '.layui-icon-delete', function() {
+    //     $.ajax({
+    //         url: `http://ttapi.research.itcast.cn/mp/v1_0/user/images/${}`,
+    //         method: 'DELETE',
+    //         headers: {
+    //             Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
+    //         },
+    //         success: function(res) {
+    //             console.log(res);
+    //             renderPage(res.data.total_count)
+    //         }
+    //     })
+    // })
 })

@@ -14,49 +14,70 @@
 
 <body>
     <div class="layui-card">
-        <div class="layui-card-header">
-            <a href="../home-page/home-page.html">首页</a>
-            <span>></span>
-            <i>素材管理</i></div>
+        <div class="layui-card-header">卡片面板</div>
         <div class="layui-card-body">
-            <div class="layui-btn-group">
-                <button type="button" class="layui-btn layui-btn-primary layui-btn layui-btn-normal">全部</button>
-                <button type="button" class="layui-btn layui-btn-primary">收藏</button>
-            </div>
-            <div class="layui-upload">
-                <input type="file" id="file" accept="image/png,image/jpeg">
-                <button type="button" class="layui-btn" id="test1">上传图片</button>
-                <!-- <div class="layui-upload-list">
-                    <img class="layui-upload-img" id="demo1">
-                    <p id="demoText"></p>
-                </div> -->
-            </div>
-            <div class="layui-row layui-col-space1">
-            </div>
-            <!-- 分页区域 -->
-            <div id="pageBox"></div>
-        </div>
-        <script type="text/html" id="Material">
-            {{each results}}
-            <div class="layui-col-md3">
-                <div class="grid-demo grid-demo-bg1">
-                    <img src="{{$value.url}}" id='{{$value.id}}'>
-                    <div class="option">
-                        <i class="layui-icon layui-icon-rate"></i>
-                        <i class="layui-icon layui-icon-delete"></i>
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this btn1">全部</li>
+                    <li class="btn2">收藏</li>
+                    <input type="file" id="file-pic-ipt" accept="image/png, image/jpeg" style="display: none;">
+                    <button type="button" class="layui-btn layui-btn-normal" id="upload-pic-btn">上传图片</button>
+                </ul>
+                <div class="layui-tab-content Box">
+                    <div class="layui-tab-item layui-show box3">
+                    </div>
+
+                    <div class="layui-tab-item box4">
+
                     </div>
                 </div>
+
+                <!-- 分页 -->
+                <div class="box5" id="pageBox"></div>
             </div>
-            {{/each}}
-        </script>
-        <!-- 引入layui的js -->
-        <script src="/assets/lib/layui/layui.all.js"></script>
-        <!-- 引入jQuery -->
-        <script src="/assets/lib/jquery/jquery.min.js"></script>
-        <!-- 引入template的js -->
-        <script src="/assets/lib/template-web.js"></script>
-        <!-- 引入自己的js -->
-        <script src="/assets/lib/feature/Material/feature/Material.js"></script>
+        </div>
+    </div>
+
+    <!-- 自己创建一个图片模板 -->
+    <script type="text/html" id="material-pic">
+        {{each results}}
+        <div class="layui-col-md2 box2">
+            <div class="layui-col-md2-box box1">
+                <img class="layui-col-md2-pic" src="{{$value.url}}" data-id="{{$value.id}}">
+                <div class="operate">
+                    {{if $value.is_collected==true}}
+                    <i class="layui-icon layui-icon-rate red star" is_collected="{{$value.is_collected}}" id="star1"></i> {{else if $value.is_collected==false}}
+                    <i class="layui-icon layui-icon-rate star" is_collected="{{$value.is_collected}}" id="star2"></i> {{/if}}
+                    <i class="layui-icon layui-icon-delete delete"></i>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <!-- 收藏图片模板 -->
+    <script type="text/html" id="collect-pic">
+        {{each results}}
+        <div class="layui-col-md2 box2">
+            <div class="layui-col-md2-box box1">
+                <img class="layui-col-md2-pic" src="{{$value.url}}" data-id="{{$value.id}}">
+                <div class="operate">
+                    {{if $value.is_collected==true}}
+                    <i class="layui-icon layui-icon-rate red star" is_collected="{{$value.is_collected}}"></i> {{else if $value.is_collected==false}}
+                    <i class="layui-icon layui-icon-rate star" is_collected="{{$value.is_collected}}"></i> {{/if}}
+                    <i class="layui-icon layui-icon-delete delete"></i>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script src="/assets/lib/layui/layui.all.js"></script>
+    <!-- 引入jQuery -->
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <!-- 引入template的js -->
+    <script src="/assets/lib/template-web.js"></script>
+    <!-- 引入自己的js -->
+    <script src="/assets/lib/feature/Material/feature/Material.js"></script>
 </body>
 
 </html>
