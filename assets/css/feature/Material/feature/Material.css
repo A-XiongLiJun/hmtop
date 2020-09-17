@@ -1,0 +1,77 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f2f3f5;
+    padding: 15px;
+}
+
+.layui-card-header a {
+    font-weight: 700;
+}
+
+.layui-card-header i {
+    font-style: normal;
+}
+
+.layui-btn-group :nth-child(1) {
+    border-radius: 8px 0 0 8px !important;
+}
+
+.layui-btn-group :nth-child(2) {
+    border-radius: 0 8px 8px 0 !important;
+}
+
+.layui-card-body .one {
+    color: #fff;
+    background-color: #67c23a;
+    border-color: #67c23a;
+    border-radius: 6px!important;
+    float: right;
+}
+
+.grid-demo-bg1 {
+    position: relative;
+    width: 180px;
+    height: 180px;
+}
+
+img {
+    width: 180px;
+    height: 180px;
+    border: 1px dashed #ddd;
+    display: inline-block;
+    margin: 0 30px 20px;
+}
+
+.grid-demo-bg1 .option {
+    height: 30px;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+    position: absolute;
+    left: 30px;
+    bottom: -1px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.grid-demo-bg1 .option i {
+    margin: 0 20px;
+}
+
+.layui-card-body {
+    position: relative;
+}
+
+.layui-upload button {
+    position: absolute;
+    top: 6px;
+    right: 60px;
+}
+
+#file {
+    display: none;
+}
