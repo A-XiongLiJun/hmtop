@@ -143,11 +143,11 @@
             </div>
         </div>
         <script type="text/html" id="newArt">
-            {{each data}}
+            {{each data.results}}
             <li class='list'>
-                <img src="/assets/images/4.jpg" class="newImg">
+                <img src="{{$value.cover.images[0]}}" class="newImg">
                 <dl>
-                    <dt>黑马头条官方账号</dd>
+                    <dt>{{$value.title}}</dd>
             <dd class="time"> <span class="state" >已发表</span> 2020-09-06 </dd>
             <dd class="tuijian">推荐 65 阅读 298 评论 80 转发 70 收藏 56 </dd>
            </dl>
