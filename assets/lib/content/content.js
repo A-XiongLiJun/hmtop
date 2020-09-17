@@ -22,12 +22,18 @@ $(function() {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
             },
+            dataFilter: function (res)  {
+              res = res.replace(/\"id\": (\d+)/g,  '"id":"$1"')
+                // console.log(res);
+                return res
+            },
             success: function(res) {
                 // if (res.status !== 200) {
                 //     return layer.msg(res.status)
                 // }
+                // console.log(res);
                 $('#tab-sum').html(res.data.total_count) //筛选后的总条数
-                console.log(res.data);
+                // console.log(res.data);
                 var htmlStr = template('tm-tab', res.data)
                 $('tbody').html(htmlStr)
                 Next(res.data.total_count)
@@ -42,7 +48,7 @@ $(function() {
                 Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
             },
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 var htmlStr = template('tm-list', res.data)
                 $('#select-list').html(htmlStr)
                     // 手动调用layui  重新渲染一下
@@ -114,7 +120,7 @@ $(function() {
             layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
             limits: [10, 20, 30, 40],
             jump: function(obj, first) {
-                console.log(obj.curr);
+                // console.log(obj.curr);
                 query.page = obj.curr
                 if (!first) {
                     query.per_page = obj.limit
@@ -148,28 +154,23 @@ $(function() {
     }
 
     // 编辑事件
-    $('tbody').on('click', '#cell', function() {
-        location.href = '/content/cell.html'
-    })
+    // $('tbody').on('click', '#cell', function() {
+    //     location.href = '/content/cell.html'
+    // })
 
     //删除事件
     $('tbody').on('click', '#delete', function() {
-
-        var tbody = document.querySelector('tbody')
-        tbody.removeChild(this.parentNode.parentNode);
-
-
-        // var id = $(this).attr('data-id')
-        // $.ajax({
-        //     url: `http://ttapi.research.itcast.cn/mp/v1_0/articles/:${id}`,
-        //     method: 'DELETE',
-        //     headers: {
-        //         Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
-        //     },
-        //     success: function(res) {
-        //         console.log(res);
-        //         initTable()
-        //     }
-        // })
+        var id = $(this).attr('data-id')
+        $.ajax({
+            url: `http://ttapi.research.itcast.cn/mp/v1_0/articles/${id}`,
+            method: 'DELETE',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('hmtoken')
+            },
+            success: function(res) {
+                console.log(res);
+                initTable()
+            }
+        })
     })
 })
