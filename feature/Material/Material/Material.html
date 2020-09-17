@@ -63,8 +63,10 @@
                 <img class="layui-col-md2-pic" src="{{$value.url}}" data-id="{{$value.id}}">
                 <div class="operate">
                     {{if $value.is_collected==true}}
-                    <i class="layui-icon layui-icon-rate red star" is_collected="{{$value.is_collected}}"></i> {{else if $value.is_collected==false}}
-                    <i class="layui-icon layui-icon-rate star" is_collected="{{$value.is_collected}}"></i> {{/if}}
+                    <i class="layui-icon layui-icon-rate red star" is_collected="{{$value.is_collected}}"></i>
+                    {{else if $value.is_collected==false}}
+                    <i class="layui-icon layui-icon-rate star" is_collected="{{$value.is_collected}}"></i> 
+                    {{/if}}
                     <i class="layui-icon layui-icon-delete delete"></i>
                 </div>
             </div>
