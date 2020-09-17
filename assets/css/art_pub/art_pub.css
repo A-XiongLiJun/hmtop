@@ -1,0 +1,63 @@
+     html,
+     body {
+         margin: 0;
+         padding: 0;
+     }
+     
+     body {
+         background-color: #f2f3f5;
+         padding: 15px;
+     }
+     
+     .layui-card-header a {
+         font-weight: 700;
+     }
+     
+     .layui-card-header i {
+         font-style: normal;
+     }
+     
+     .cover-left img {
+         border: 1px dashed #ccc;
+     }
+     
+     #selectContentType {
+         width: 350px;
+     }
+     
+     #file {
+         display: none;
+     }
+     
+     .layui-show img {
+         width: 150px;
+         height: 120px;
+         margin: 3px
+     }
+     
+     .cover-upload {
+         width: 300px;
+         height: 300px;
+     }
+     
+     .cover-upload img {
+         width: 100%;
+         height: 100%;
+     }
+     
+     .cover-left {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%)
+     }
+     
+     .layui-show #showImages {
+         width: 250px;
+         height: 200px;
+     }
+     
+     #uploadBtn {
+         margin-top: 30px;
+         margin-left: 55px;
+     }
