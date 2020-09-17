@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人设置</title>
+  <link rel="stylesheet" href="/assets/lib/layui/css/layui.css">
+  <link rel="stylesheet" href="/assets/css/featureuser/featureuser.css">
+</head>
+
+<body>
+  <!-- 引入卡片 -->
+  <div class="layui-card">
+    <div class="layui-card-header">账号信息</div>
+    <div class="layui-card-body">
+      <form class="layui-form">
+
+        <div class="layui-form-item username">
+          <label class="layui-form-label">
+            <div class="userinfo">
+              <img src="" class="user_avatar">
+              <br>
+              <a href="javascript:;" style="color: rgb(50, 150, 250);" id="changpic-btn">更换头像</a>
+            </div>
+          </label>
+          <div class="rightcontent">
+            <!-- 修改部分 -->
+            <dl>
+              <dt id="username_name"></dt>
+              <dd id="username_intro"></dd>
+            </dl>
+            <a href="javascript:;" style="color: rgb(50, 150, 250);float:right;" id="changename-btn">修改</a>
+          </div>
+          <!-- 表单更改 -->
+          <div id="gainame" style="display: none;">
+            <form class="layui-form" id="form-name" lay-filter="aaa">
+              <div class="layui-form-item juli nobottom">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
+                  <input type="text" name="name" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input" id="un">
+                </div>
+              </div>
+              <div class="layui-form-item juli nobottom" >
+                <label class="layui-form-label">简介</label>
+                <div class="layui-input-block">
+                  <input type="text" name="intro" required  lay-verify="required" placeholder="请输入简介" autocomplete="off" class="layui-input" id='jianjie'>
+                </div>
+              </div>
+              <div class="layui-form-item juli nobottom">
+                <div class="layui-input-block">
+                  <button class="layui-btn  layui-btn-normal" lay-submit lay-filter="bc">保存</button>
+                  <button type="reset" class="layui-btn layui-btn-primary" id="quxiao_btn">取消</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          
+          
+
+
+        </div>
+    </div>
+    <!-- 第二行 -->
+    <div class="layui-form-item userinfo">
+      <label class="layui-form-label">账号信息</label>
+      <div class="rightcontent">
+        <div class="clause"><span>头条号类型</span>个人
+        </div>
+        <div class="clause"><span>头条号ID</span><span id="username_id"></span>
+        </div>
+      </div>
+    </div>
+    <!-- 第三行 -->
+    <div class="layui-form-item userinfo">
+      <label>登录方式</label>
+      <div class="rightcontent">
+        <div class="clause">
+          <span id="username_mobile">绑定手机</span>
+
+        </div>
+      </div>
+    </div>
+    <!-- 第四行 -->
+    <div class="layui-form-item userinfo " id="email_userinfo">
+      <label>邮箱</label>
+      <div class="rightcontent">
+        <div class="clause">
+          <span id="username_email"></span>
+          <a href="javascript:;" id="changeemail-btn">修改邮箱</a>
+        </div>
+      </div>
+      <div id="gaiemail" style="display: none;" >
+        <form class="layui-form" id="form-email" lay-filter="ccc">
+          <div class="layui-form-item juli nobottom" >
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+              <input type="text" name="email" required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input" id='lfy-email' style="width: 200px;">
+            </div>
+          </div>
+          <div class="layui-form-item juli nobottom">
+            <div class="layui-input-block">
+              <button class="layui-btn  layui-btn-normal layui-btn layui-btn-sm" lay-submit lay-filter="de" >保存</button>
+              <button type="reset" class="layui-btn layui-btn-primary layui-btn layui-btn-sm" id="not_btn" >取消</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </form>
+  </div>
+  </div>
+
+  <!-- 构建模板引擎 -->
+  <script type="text/html" id="shangchuan">
+    <div style="padding: 30px 20px;color: #606266;font-size: 14px;">
+      <img src="" class="localimg" style="width:180px">
+      <div class="avatar-uploader">
+        <div tabindex="0" class="el-upload el-upload--text">
+          <i class="el-icon-plus avatar-uploader-icon">
+            <i class="layui-icon layui-icon-addition">   
+            </i>
+          </i>
+          <input type="file" name="file" class="el-upload__input" id="file">
+        </div>
+        <ul class="el-upload-list el-upload-list--text">
+        </ul>
+      </div>
+    </div>
+  </script>
+
+
+  <!-- 修改昵称 -->
+  <script type="text/html" id="intro">
+    <form class="layui-form" id="form-email" lay-filter="ccc">
+      <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">简介</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
+          <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+        </div>
+      </div>
+    </form>
+  </script>
+
+  <script src="/assets/lib/layui/layui.all.js"></script>
+  <script src="/assets/lib/jquery/jquery.js"></script>
+
+  <script src="/assets/lib/template-web.js"></script>
+  <script src="/assets/lib/featureuser/featureuser.js"></script>
+</body>
+
+</html>
